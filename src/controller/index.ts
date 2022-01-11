@@ -6,3 +6,5 @@ const router = express.Router();
 router.use('/trade', tradeController);
 
 export default router;
+
+

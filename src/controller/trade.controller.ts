@@ -1,4 +1,5 @@
 import express from "express";
+import { where } from "sequelize/dist";
 import Article from "../model/aritcle.model";
 
 type NewArticle = {
@@ -35,6 +36,16 @@ router.post("/articles", async (req, res) => {
 });
 
 router.get("/articles", async (req, res) => {
+    const { location } = req.query;
+
+    if (location) {
+        const articles = await Article.findAll({
+            where: {
+                location: location,
+            },
+        });
+        return res.status(200).json(articles);
+    }
     const articles = await Article.findAll();
     return res.status(200).json(articles);
 });
