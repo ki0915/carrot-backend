@@ -35,6 +35,26 @@ router.post("/articles", async (req, res) => {
     });
 });
 
+router.get("/articles/:articleid", async (req, res) => {
+    const { articleid } = req.params;
+    if (!articleid) {
+        return res.status(400).json();
+    }
+
+    const articleIDNumber = parseInt(articleid, 10);
+    const article = await Article.findOne({
+        where: {
+            id: articleIDNumber,
+        },
+    });
+
+    if (!article) {
+        return res.status(404).json();
+    }
+    return res.status(200).json(article);
+});
+
+
 router.get("/articles", async (req, res) => {
     const { location } = req.query;
 
